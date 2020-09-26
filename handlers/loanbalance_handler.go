@@ -39,7 +39,6 @@ func GetBalance(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if v, ok := m[dt]; ok {
-		fmt.Println("value in m[d] ", m[dt])
 		bal := strconv.FormatFloat(v.newbalance, 'f', 6, 64)
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprintf(w, bal)
