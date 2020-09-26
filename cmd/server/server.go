@@ -1,7 +1,7 @@
 package main
 
 import (
-	"loanprocess-rest-service/handlers"
+	"loanprocess-rest-service/internal/handlers"
 	"log"
 	"net/http"
 	"os"
