@@ -3,12 +3,9 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
-	"io"
 	"log"
 	"net/http"
 )
-
-var prevPaydate string // previous payment date
 
 type payment struct {
 	Repayment float64 `json:"amount"`
@@ -38,25 +35,18 @@ func Payment(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Please check the date format YYYY-MM-DD")
 		return
 	}
-	numofDays := pd.Sub(lsd).Hours() / 24 // number of days elapsed between loan start date and particular payment date
-	interestPerday := (l.Interest * b.newbalance) / (100 * 365)
-	interestaccrued := interestPerday * float64(numofDays)
-
-	//Assumed interest is calculated on daily basis
-	//Checking if the same day has more than one payment. If yes, interest shouldn't be calculated again.
-	if p.PaidDate == prevPaydate {
-		interestaccrued = 0
-	}
-	prevPaydate = p.PaidDate
-	b.newbalance = b.newbalance + interestaccrued - p.Repayment
-	if b.newbalance < 0 {
-		w.WriteHeader(http.StatusOK)
-		fmt.Fprintf(w, "paid extra amount than balance, you have credit balance of: %v ", -b.newbalance)
+	if pd.Before(lsd) {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintf(w, "There is no loan record on this date")
 		return
 	}
-	b.date = pd
-	m[pd] = b // ading the balance details of a particular day to map
+	if v, ok := m[pd]; ok {
+		m[pd] = v + p.Repayment
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintf(w, "payment done successfully")
+		return
+	}
+	m[pd] = p.Repayment // ading the balance details of a particular day to map
 	w.WriteHeader(http.StatusOK)
-	io.WriteString(w, "payment done successfully")
-
+	fmt.Fprintf(w, "payment done successfully")
 }

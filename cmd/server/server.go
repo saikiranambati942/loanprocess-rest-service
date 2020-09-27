@@ -8,10 +8,7 @@ import (
 )
 
 func main() {
-	http.HandleFunc("/getbalance", handlers.GetBalance)
-	http.HandleFunc("/payment", handlers.Payment)
-	http.HandleFunc("/loaninitiate", handlers.LoanInitiate)
-
+	handlers.Routes()
 	if err := http.ListenAndServe("localhost:8080", nil); err != nil {
 		log.Fatal("Shutting down the application")
 		os.Exit(1)

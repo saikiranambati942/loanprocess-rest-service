@@ -4,21 +4,27 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"math"
 	"net/http"
+	"sort"
 	"strconv"
 	"time"
 )
-
-var b balance
 
 type balanceDate struct {
 	Date string `json:"date"`
 }
 
-type balance struct {
-	newbalance float64
-	date       time.Time
+type dateSlice []time.Time
+
+func (d dateSlice) Len() int {
+	return len(d)
+}
+func (d dateSlice) Less(i, j int) bool {
+	return d[i].Before(d[j])
+}
+
+func (d dateSlice) Swap(i, j int) {
+	d[i], d[j] = d[j], d[i]
 }
 
 // GetBalance function is a handler to handle the requests to know the amount of totalbalance remaining on a specific date
@@ -39,27 +45,32 @@ func GetBalance(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Please check the date format YYYY-MM-DD")
 		return
 	}
-	if v, ok := m[dt]; ok {
-		bal := strconv.FormatFloat(v.newbalance, 'f', 6, 64)
+	if dt.Before(lsd) {
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprintf(w, bal)
+		fmt.Fprintf(w, "There is no loan record on this date")
 		return
 	}
-	var days float64 = math.MaxFloat64
-	var b float64
-	for date, bal := range m {
-		if date.Before(dt) {
-			d := dt.Sub(date).Hours() / 24
-			if d < days {
-				days = d
-				b = bal.newbalance
-			}
+	if _, ok := m[dt]; !ok {
+		m[dt] = 0
+	}
+	ds := make(dateSlice, 0, len(m))
+	for k := range m {
+		ds = append(ds, k)
+	}
+	sort.Sort(ds)
+	for k, v := range ds {
+		if v.Equal(dt) {
+			ds = ds[:k+1]
 		}
 	}
-	interestPerday := (l.Interest * b) / (100 * 365)
-	interestaccrued := interestPerday * days
-	balance := b + interestaccrued
-	balanceString := strconv.FormatFloat(balance, 'f', 6, 64)
+	b := l.Loanamount
+	for _, pd := range ds {
+		days := pd.Sub(lsd).Hours() / 24
+		interestPerday := (l.Interest * b) / (100 * 365)
+		interestaccrued := interestPerday * days
+		b = b + interestaccrued - m[pd]
+	}
+	balanceString := strconv.FormatFloat(b, 'f', 6, 64)
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, balanceString)
 }
