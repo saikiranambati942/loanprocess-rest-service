@@ -11,7 +11,7 @@ This service contains three handlers:
 
 ## Repository Structure:
 -----------------------
-### Directory tree:
+### Directory tree
     . 
     ├── cmd
     |      |__server
@@ -39,7 +39,6 @@ This service contains three handlers:
 The `cmd` package is the starting point of our application. This has a server folder which contains server.go file where the main function of our application.
 
 
-
 [`internal`](https://github.com/saikiranambati942/loanprocess-rest-service/tree/master/internal "API documentation") package:
 ----------------------------------------------------------------------------------------------------------------------------
 
@@ -53,8 +52,11 @@ Payment handler handles the loan repayment requests (`loanpayment_handler.go`)
 
 GetBalance handler handles the requests to retrieve the remaining balance  on a specified date (`loanbalance_handler.go`)
 
-`tests` folder contains the test cases covered for all the three handlers mentioned above
 
+[`test`](https://github.com/saikiranambati942/loanprocess-rest-service/tree/master/test "API documentation") package:
+--------------------------------------------------------------------------------------------------------------------
+
+`test` package contains the test cases covered for all the application code functionalities
 
 
 [`vendor`](https://github.com/saikiranambati942/loanprocess-rest-service/tree/master/vendor "API documentation") package:
@@ -121,6 +123,14 @@ For example
  "date": "2020-02-27"
 }
 ```
+
+## Sample Execution Result
+Step1: Start server using the below command
+```
+go run cmd/server/server.go
+```
+Step2: Initiate the loan with input data
+
 
 
 ## TODO
