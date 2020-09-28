@@ -11,9 +11,9 @@ import (
 )
 
 var (
-	l   loan
-	m   map[time.Time]float64 // map that is used to store paymentDate and newbalance
-	lsd time.Time             // loan start date
+	l       loan
+	datamap map[time.Time]float64 // datamap that is used to store paymentDate and newbalance
+	lsd     time.Time             // loan start date
 )
 
 type loan struct {
@@ -24,7 +24,9 @@ type loan struct {
 
 // LoanInitiate func is a handler to handle the loan inititaion process
 func LoanInitiate(w http.ResponseWriter, r *http.Request) {
-	m = make(map[time.Time]float64)
+	// initialized the datamap
+	datamap = make(map[time.Time]float64)
+	// Unmarshalling the json request data
 	err := json.NewDecoder(r.Body).Decode(&l)
 	if err != nil {
 		log.Println(err)
@@ -32,11 +34,13 @@ func LoanInitiate(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Input data format is not correct")
 		return
 	}
+	// validating whether the requested loan amount is less than zero
 	if l.Loanamount <= 0 {
 		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, "Loan initiation amount should be greater than zero")
 		return
 	}
+	// validating whether the requested interest rate is less than zero
 	if l.Interest < 0 {
 		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, "Interest rate should not be negative")

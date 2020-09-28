@@ -22,6 +22,7 @@ func Payment(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Input data format is not correct")
 		return
 	}
+	// condition to check if the payment is less than or equal to zero
 	if p.Repayment <= 0 {
 		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, "Please enter an amount greater than zero")
@@ -35,18 +36,22 @@ func Payment(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Please check the date format YYYY-MM-DD")
 		return
 	}
+	// condition to check if the payment date requested to add is before loan initiated date
 	if pd.Before(lsd) {
 		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, "There is no loan record on this date")
 		return
 	}
-	if v, ok := m[pd]; ok {
-		m[pd] = v + p.Repayment
+	// condition to check whether there is any payment on the same date before.
+	// If yes, instead of overwriting the previous payment we are adding the payments.
+	if v, ok := datamap[pd]; ok {
+		datamap[pd] = v + p.Repayment
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprintf(w, "payment done successfully")
 		return
 	}
-	m[pd] = p.Repayment // ading the balance details of a particular day to map
+	// adding the payment date and amount to the map
+	datamap[pd] = p.Repayment
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, "payment done successfully")
 }

@@ -38,38 +38,47 @@ func GetBalance(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	// Assuming date in the request is in the format of YYYY-MM-DD
-	dt, err := Date(bd.Date)
+	bldate, err := Date(bd.Date)
 	if err != nil {
 		log.Println(err)
 		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, "Please check the date format YYYY-MM-DD")
 		return
 	}
-	if dt.Before(lsd) {
+	if bldate.Before(lsd) {
 		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, "There is no loan record on this date")
 		return
 	}
-	if _, ok := m[dt]; !ok {
-		m[dt] = 0
+	// checking whether the requested balance date is in the map of paid dates list.
+	// If not, adding a entry in map with key as requested balance date and value as zero
+	if _, ok := datamap[bldate]; !ok {
+		datamap[bldate] = 0
 	}
-	ds := make(dateSlice, 0, len(m))
-	for k := range m {
+	ds := make(dateSlice, 0, len(datamap))
+	// adding all the map keys which are dates to a slice
+	for k := range datamap {
 		ds = append(ds, k)
 	}
-	sort.Sort(ds)
-	for k, v := range ds {
-		if v.Equal(dt) {
-			ds = ds[:k+1]
+	sort.Sort(ds) // sorting the slice of dates
+	for i, paidDate := range ds {
+		// reslicing the slice till the requested balance date
+		if paidDate.Equal(bldate) {
+			ds = ds[:i+1]
 		}
 	}
+	// Assigning the initial balance to loan amount
 	b := l.Loanamount
+	// pd is the payment date. Ranging over the date slice
 	for _, pd := range ds {
+		// number of days between loan start date and payment date
 		days := pd.Sub(lsd).Hours() / 24
 		interestPerday := (l.Interest * b) / (100 * 365)
 		interestaccrued := interestPerday * days
-		b = b + interestaccrued - m[pd]
+		//new balance amount
+		b = b + interestaccrued - datamap[pd]
 	}
+	//converting the balance of float64 format t string format
 	balanceString := strconv.FormatFloat(b, 'f', 6, 64)
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, balanceString)
