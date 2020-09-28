@@ -125,11 +125,34 @@ For example
 ```
 
 ## Sample Execution Result
-Step1: Start server using the below command
+#### Step1: Start server using the below command
+
 ```
 go run cmd/server/server.go
 ```
-Step2: Initiate the loan with input data
+#### Step2: Initiate the loan with input data
+
+![](https://github.com/saikiranambati942/loanprocess-rest-service/blob/master/docs/images/loaninitiate.png)
+
+#### Step3: Add a payment on any date
+
+![](https://github.com/saikiranambati942/loanprocess-rest-service/blob/master/docs/images/loanpayment.png)
+
+#### Step4: Check balance on any date
+
+##### Checking balance on payment date 
+
+![](https://github.com/saikiranambati942/loanprocess-rest-service/blob/master/docs/images/loanbalance_on_paymentdate.png)
+
+##### Checking balance randomly before payment date 
+
+![](https://github.com/saikiranambati942/loanprocess-rest-service/blob/master/docs/images/loanbalance_before_paymentdate.png)
+
+##### Checking balance randomly after payment date 
+
+![](https://github.com/saikiranambati942/loanprocess-rest-service/blob/master/docs/images/loanbalance_after_paymentdate.png)
+
+
 
 
 
