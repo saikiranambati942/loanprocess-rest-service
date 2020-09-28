@@ -81,5 +81,5 @@ func GetBalance(w http.ResponseWriter, r *http.Request) {
 	//converting the balance of float64 format t string format
 	balanceString := strconv.FormatFloat(b, 'f', 6, 64)
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, balanceString)
+	fmt.Fprintf(w, "Your Loan Balance as of %s is %s", bd.Date, balanceString)
 }

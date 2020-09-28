@@ -47,11 +47,11 @@ func Payment(w http.ResponseWriter, r *http.Request) {
 	if v, ok := datamap[pd]; ok {
 		datamap[pd] = v + p.Repayment
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprintf(w, "payment done successfully")
+		fmt.Fprintf(w, "Payment of %f added successfully on %s", p.Repayment, p.PaidDate)
 		return
 	}
 	// adding the payment date and amount to the map
 	datamap[pd] = p.Repayment
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "payment done successfully")
+	fmt.Fprintf(w, "Payment of %f added successfully on %s", p.Repayment, p.PaidDate)
 }

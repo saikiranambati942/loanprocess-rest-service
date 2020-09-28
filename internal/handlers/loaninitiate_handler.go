@@ -55,7 +55,7 @@ func LoanInitiate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "loan initiated successfully")
+	fmt.Fprintf(w, "Loan amount of %f is initiated successfully on %s with interest rate of %f%% per annum", l.Loanamount, l.Startdate, l.Interest)
 }
 
 // Date is a utility function that takes a date in string format(YYYY-MM-DD) and converts it into time.Time format
