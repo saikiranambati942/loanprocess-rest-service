@@ -53,7 +53,7 @@ func TestLoanBalanceHandler(t *testing.T) {
 		r := httptest.NewRequest(http.MethodPost, "/getbalance", strings.NewReader(x))
 		w := httptest.NewRecorder()
 		http.DefaultServeMux.ServeHTTP(w, r)
-		expectedBalance := "4012.328767"
+		expectedBalance := "Your Loan Balance as of 2020-02-20 is 4012.328767"
 		assert.Equal(t, expectedBalance, w.Body.String())
 
 	})
@@ -64,7 +64,7 @@ func TestLoanBalanceHandler(t *testing.T) {
 		r := httptest.NewRequest(http.MethodPost, "/getbalance", strings.NewReader(x))
 		w := httptest.NewRecorder()
 		http.DefaultServeMux.ServeHTTP(w, r)
-		expectedBalance := "4023.321449"
+		expectedBalance := "Your Loan Balance as of 2020-02-22 is 4023.321449"
 		assert.Equal(t, expectedBalance, w.Body.String())
 	})
 
