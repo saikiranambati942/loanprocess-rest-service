@@ -34,7 +34,6 @@ This service contains three handlers:
     └── README.md
 
 [`cmd`](https://github.com/saikiranambati942/loanprocess-rest-service/tree/master/cmd "API documentation") package:
-
 ------------------------------------------------------------------------------------------------------------------
 
 The `cmd` package is the starting point of our application. This has a server folder which contains server.go file where the main function of our application.
@@ -42,7 +41,6 @@ The `cmd` package is the starting point of our application. This has a server fo
 
 
 [`internal`](https://github.com/saikiranambati942/loanprocess-rest-service/tree/master/internal "API documentation") package:
-
 ----------------------------------------------------------------------------------------------------------------------------
 
 The `internal` package contains the source code which is internal to our application. 
@@ -60,7 +58,6 @@ GetBalance handler handles the requests to retrieve the remaining balance  on a 
 
 
 [`vendor`](https://github.com/saikiranambati942/loanprocess-rest-service/tree/master/vendor "API documentation") package:
-
 ------------------------------------------------------------------------------------------------------------------------
 
 The `vendor` folder contains the application dependencies. All the packages needed to support builds and tests of application are included in this folder
