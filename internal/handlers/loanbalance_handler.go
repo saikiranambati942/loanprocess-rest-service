@@ -46,7 +46,7 @@ func GetBalance(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if dt.Before(lsd) {
-		w.WriteHeader(http.StatusOK)
+		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, "There is no loan record on this date")
 		return
 	}

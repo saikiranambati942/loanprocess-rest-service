@@ -50,7 +50,6 @@ func TestLoanPaymentHandler(t *testing.T) {
 		w := httptest.NewRecorder()
 		http.DefaultServeMux.ServeHTTP(w, r)
 		assert.Equal(t, "Please enter an amount greater than zero", w.Body.String())
-
 	})
 
 	t.Run("testcase of loan payment before loan sanctioned date", func(t *testing.T) {
