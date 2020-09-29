@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-// Starting point of the application
+// application starts here
 func main() {
 	handlers.Routes()
 	if err := http.ListenAndServe("localhost:8080", nil); err != nil {
