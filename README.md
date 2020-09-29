@@ -26,23 +26,23 @@ This service contains three handlers:
     |      |__loanapiserver
     |             |__loanapiserver.go             # main function of application i.e; loanprocess-rest-service starts here
     |                         
-    ├── internal                           # handlers for loan initiation, add payment and get balance information 
+    ├── internal                                  # handlers for loan initiation, add payment and get balance information 
     |      |__handlers
     |              |__handlers.go
     |              |__loaninitiate_handler.go
     |              |__loanpayment_handler.go
     |              |__loanbalance_handler.go
     |                
-    ├── test                                # unit tests for handlers     
+    ├── test                                      # unit tests for handlers     
     |      |__loaninitiate_handler_test.go                             
     |      |__loanpayment_handler_test.go
     |      |__loanbalance_handler_test.go
     |
     |
-    ├── docs                                 # contains screenshots of run results for user reference 
+    ├── docs                                     # contains screenshots of run results for user reference 
     |      |__images                        
     |                  
-    ├── vendor                               # contains application dependencies
+    ├── vendor                                   # contains application dependencies
     └── README.md
 
 [`cmd`](https://github.com/saikiranambati942/loanprocess-rest-service/tree/master/cmd "API documentation") package:
