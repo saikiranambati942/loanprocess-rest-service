@@ -11,7 +11,7 @@ This service contains three handlers:
 2) Can add payments in any order.
 3) Request balance on any date.
 4) Interest calculation should be based on the principal balance and exclude already added interest balance.
-5) The interest added for a day is defined as: annual interest rate / 100 / 365 * principal balance.
+5) The interest added for a day is defined as: (annual interest rate * principal balance)/(100 * 365).
 6) The balance returned is based on all payments and the interest added up to the requested date.
 7) Service does not handle multiple loans, i.e. the state will be cleared when a new loan is initiated.
 
