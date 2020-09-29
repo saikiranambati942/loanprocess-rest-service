@@ -23,24 +23,24 @@ This service contains three handlers:
 ### Directory tree
     . 
     ├── cmd
-    |      |__loanapiserver
-    |             |__loanapiserver.go             # main function of application i.e; loanprocess-rest-service starts here
+    |      └──loanapiserver
+    |             └──loanapiserver.go             # main function of application i.e; loanprocess-rest-service starts here
     |                         
     ├── internal                                  # handlers for loan initiation, add payment and get balance information 
-    |      |__handlers
-    |              |__handlers.go
-    |              |__loaninitiate_handler.go
-    |              |__loanpayment_handler.go
-    |              |__loanbalance_handler.go
+    |      └──handlers
+    |              └──handlers.go
+    |              └──loaninitiate_handler.go
+    |              └──loanpayment_handler.go
+    |              └──loanbalance_handler.go
     |                
     ├── test                                      # unit tests for handlers     
-    |      |__loaninitiate_handler_test.go                             
-    |      |__loanpayment_handler_test.go
-    |      |__loanbalance_handler_test.go
+    |      └──loaninitiate_handler_test.go                             
+    |      └──loanpayment_handler_test.go
+    |      └──loanbalance_handler_test.go
     |
     |
     ├── docs                                     # contains screenshots of run results for user reference 
-    |      |__images                        
+    |      └──images                        
     |                  
     ├── vendor                                   # contains application dependencies
     └── README.md
