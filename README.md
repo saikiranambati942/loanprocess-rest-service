@@ -23,32 +23,32 @@ This service contains three handlers:
 ### Directory tree
     . 
     ├── cmd
-    |      |__server
-    |             |__server.go             # main function of application i.e; loanprocess-rest-service starts here
+    |      |__loanapiserver
+    |             |__loanapiserver.go             # main function of application i.e; loanprocess-rest-service starts here
     |                         
-    ├── internal                           # handlers for loan initiation, add payment and get balance information 
+    ├── internal                                  # handlers for loan initiation, add payment and get balance information 
     |      |__handlers
     |              |__handlers.go
     |              |__loaninitiate_handler.go
     |              |__loanpayment_handler.go
     |              |__loanbalance_handler.go
     |                
-    ├── test                                # unit tests for handlers     
+    ├── test                                      # unit tests for handlers     
     |      |__loaninitiate_handler_test.go                             
     |      |__loanpayment_handler_test.go
     |      |__loanbalance_handler_test.go
     |
     |
-    ├── docs                                 # contains screenshots of run results for user reference 
+    ├── docs                                     # contains screenshots of run results for user reference 
     |      |__images                        
     |                  
-    ├── vendor                               # contains application dependencies
+    ├── vendor                                   # contains application dependencies
     └── README.md
 
 [`cmd`](https://github.com/saikiranambati942/loanprocess-rest-service/tree/master/cmd "API documentation") package:
 ------------------------------------------------------------------------------------------------------------------
 
-The `cmd` package is the starting point of our application. This has a server folder which contains server.go file where the main function of our application.
+The `cmd` package is the starting point of our application. This has a loanapiserver folder which contains loanapiserver.go file where the main function of our application resides.
 
 
 [`internal`](https://github.com/saikiranambati942/loanprocess-rest-service/tree/master/internal "API documentation") package:
