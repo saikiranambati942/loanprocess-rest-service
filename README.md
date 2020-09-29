@@ -48,7 +48,7 @@ This service contains three handlers:
 [`cmd`](https://github.com/saikiranambati942/loanprocess-rest-service/tree/master/cmd "API documentation") package:
 ------------------------------------------------------------------------------------------------------------------
 
-The `cmd` package is the starting point of our application. This has a loanapiserver folder which contains loanapiserver.go file where the main function of our application resides.
+The `cmd` package is the starting point of our application. This has a `loanapiserver` folder which contains loanapiserver.go file where the main function of our application resides.
 
 
 [`internal`](https://github.com/saikiranambati942/loanprocess-rest-service/tree/master/internal "API documentation") package:
