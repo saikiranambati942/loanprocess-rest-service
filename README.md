@@ -23,8 +23,8 @@ This service contains three handlers:
 ### Directory tree
     . 
     ├── cmd
-    |      |__server
-    |             |__server.go             # main function of application i.e; loanprocess-rest-service starts here
+    |      |__loanapiserver
+    |             |__loanapiserver.go             # main function of application i.e; loanprocess-rest-service starts here
     |                         
     ├── internal                           # handlers for loan initiation, add payment and get balance information 
     |      |__handlers
@@ -48,7 +48,7 @@ This service contains three handlers:
 [`cmd`](https://github.com/saikiranambati942/loanprocess-rest-service/tree/master/cmd "API documentation") package:
 ------------------------------------------------------------------------------------------------------------------
 
-The `cmd` package is the starting point of our application. This has a server folder which contains server.go file where the main function of our application.
+The `cmd` package is the starting point of our application. This has a loanapiserver folder which contains loanapiserver.go file where the main function of our application resides.
 
 
 [`internal`](https://github.com/saikiranambati942/loanprocess-rest-service/tree/master/internal "API documentation") package:
