@@ -1,11 +1,8 @@
 # Loan-Process Rest Service
+
 ## 🚩 Table of Contents
-- [Description](#-description)
-- [Features](#-features)
-- [Repository Structure](#-repository-structure)
-- [Execution](#-execution)
-- [Sample Execution Result](#-sample-execution-result)
-- [TO DO](#-to-do)
+
+- [Description] (#-description)
 
 
 ## Description
