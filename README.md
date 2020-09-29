@@ -18,8 +18,8 @@ This service contains three handlers:
 
 
 
-## Repository Structure:
------------------------
+## Repository Structure
+
 ### Directory tree
     . 
     ├── cmd
@@ -77,7 +77,7 @@ GetBalance handler handles the requests to retrieve the remaining balance  on a 
 The `vendor` folder contains the application dependencies. All the packages needed to support builds and tests of application are included in this folder
 
 
-## Execution:
+## Execution
 After cloning the repository (https://github.com/saikiranambati942/loanprocess-rest-service.git),  run the below command
 
 ```
