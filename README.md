@@ -1,10 +1,19 @@
 # Loan-Process Rest Service
-## Description:
- This is a REST api service for simulating loan processing that supports three operations(loaninitiation, loanpayment, loanbalance).
+## Description
+This is a REST api service for simulating loan processing that supports three operations(loaninitiation, loanpayment, loanbalance).
 This service contains three handlers:
 1) LoanInitiate
 2) Payment
 3) GetBalance
+
+## Features
+1) Can initiate a loan on any date with specified amount.
+2) Can add payments in any order.
+3) Request balance on any date.
+4) Interest calculation should be based on the principal balance and exclude already added interest balance.
+5) The interest added for a day is defined as: annual interest rate / 100 / 365 * principal balance.
+6) The balance returned is based on all payments and the interest added up to the requested date.
+7) Service does not handle multiple loans, i.e. the state will be cleared when a new loan is initiated.
 
 
 
