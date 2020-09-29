@@ -143,8 +143,12 @@ For example
 }
 ```
 
-#### Please note that: Month, day values may be outside their usual ranges and will be normalized during the conversion(handled by builtin Date function in Go)
-     For example, October 32 converts to November 1.
+#### Please note:
+  Month, day values may be outside their usual ranges and will be normalized during the conversion
+  (handled by builtin Date function in Go)
+     
+     For example, October 32 converts to November 1
+    
 
 ## Sample Execution Result
 #### Step1: Start server using the below command from the root directory
