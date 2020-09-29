@@ -168,7 +168,13 @@ go run cmd/server/server.go
 
 
 
-## TODO
+## TO DO
+1) Welcome page.
+2) Adding authorization and authentication functionality for a user.
+3) To handle multiple loan requests by integrating with a database. 
+4) Dockerize the application.
+
+
 
 
 
