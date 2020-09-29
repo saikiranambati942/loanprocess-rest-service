@@ -10,8 +10,8 @@
  - [TO DO](#to-do)
 
 ## Description
-This is a REST api service for simulating loan processing that supports three operations(loaninitiation, loanpayment, loanbalance).
-This service contains three handlers:
+This is a REST api service for loan process simulation that supports three operations(loaninitiation, loanpayment, loanbalance), 
+implemented using three handlers:
 1) LoanInitiate
 2) Payment
 3) GetBalance
@@ -20,11 +20,11 @@ This service contains three handlers:
 1) Can initiate a loan on any date with specified amount.
 2) Can add payments in any order.
 3) Request balance on any date.
-4) Interest calculation should be based on the principal balance and exclude already added interest balance.
-5) The interest added for a day is defined as: (annual interest rate * principal balance)/(100 * 365).
+4) Interest calculation is based on principal balance and excludes already added interest balance.
+5) The interest added for a day is calculated using: (annual interest rate * principal balance)/(100 * 365).
 6) The balance returned is based on all payments and the interest added up to the requested date.
-7) Service does not handle multiple loans, i.e. the state will be cleared when a new loan is initiated.
-
+#### Limitation: 
+Service does not handle multiple loans, i.e. the state will be cleared when a new loan is initiated.
 
 
 
@@ -58,16 +58,14 @@ This service contains three handlers:
 [`cmd`](https://github.com/saikiranambati942/loanprocess-rest-service/tree/master/cmd "API documentation") package:
 ------------------------------------------------------------------------------------------------------------------
 
-The `cmd` package is the starting point of our application. This has a `loanapiserver` folder which contains loanapiserver.go file where the main function of our application resides.
+ `cmd` package is the initial point of the application where `loanapiserver` is the placeholder for loanapiserver.go(starting point of application)
 
 
 [`internal`](https://github.com/saikiranambati942/loanprocess-rest-service/tree/master/internal "API documentation") package:
 ----------------------------------------------------------------------------------------------------------------------------
 
-The `internal` package contains the source code which is internal to our application. 
-This has `handlers` folder where our application code exists.
+ `internal` package contains the private code internal to our application, has below `handlers`:
 
-`handlers` folder contains the below handlers:
 LoanInitiate handler handles the requests of initiation of loan (`loaninitiate_handler.go`)
 
 Payment handler handles the loan repayment requests (`loanpayment_handler.go`)
@@ -78,25 +76,24 @@ GetBalance handler handles the requests to retrieve the remaining balance  on a 
 [`test`](https://github.com/saikiranambati942/loanprocess-rest-service/tree/master/test "API documentation") package:
 --------------------------------------------------------------------------------------------------------------------
 
-`test` package contains the test cases covered for all the application code functionalities
+`test` package contains the unit test cases covered for all the application code functionalities
 
 
 [`vendor`](https://github.com/saikiranambati942/loanprocess-rest-service/tree/master/vendor "API documentation") package:
 ------------------------------------------------------------------------------------------------------------------------
 
-The `vendor` folder contains the application dependencies. All the packages needed to support builds and tests of application are included in this folder
+`vendor` folder contains application dependencies, which includes all the packages needed to support builds and tests of application
 
 
 ## How to Run and Test?
-After cloning the repository (https://github.com/saikiranambati942/loanprocess-rest-service.git),  run the below command from the root directory
+After cloning the repository (https://github.com/saikiranambati942/loanprocess-rest-service.git), run the below command from the root directory to start the http server on localhost:8080
 
 ```
 go run cmd/loanapiserver/loanapiserver.go
 ```
 
-This will start the http server on localhost on port 8080.
 
-To initiate the loan, trigger the "/loaninitiate" endpoint with the below data:
+To initiate the loan, trigger the "/loaninitiate" endpoint with the below request format:
 ```
 {
   "loanamount": float64,
@@ -114,7 +111,7 @@ For example:
   
 }
 ```
-Now to add a payment on a particular date, trigger the "/payment" endpoint with the below data:
+Now to add a payment on a particular date, trigger the "/payment" endpoint with the below request format:
 
 ```
 {
@@ -130,7 +127,7 @@ For example
  "date": "2020-02-20"
 }
 ```
-To fetch remaining balance on a particular date, trigger the "/getbalance"  endpoint with the below data:
+To fetch remaining balance on a particular date, trigger the "/getbalance"  endpoint with the below request format:
 
 ```
 {
@@ -145,6 +142,9 @@ For example
  "date": "2020-02-27"
 }
 ```
+
+#### Please note that: Month, day values may be outside their usual ranges and will be normalized during the conversion(handled by builtin Date function in Go)
+     For example, October 32 converts to November 1.
 
 ## Sample Execution Result
 #### Step1: Start server using the below command from the root directory
