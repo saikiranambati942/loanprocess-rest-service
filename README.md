@@ -1,4 +1,13 @@
 # Loan-Process Rest Service
+## 🚩 Table of Contents
+- [Description](#-description)
+- [Features](#-features)
+- [Repository Structure](#-repository-structure)
+- [Execution](#-execution)
+- [Sample Execution Result](#-sample-execution-result)
+- [TO DO](#-to-do)
+
+
 ## Description
 This is a REST api service for simulating loan processing that supports three operations(loaninitiation, loanpayment, loanbalance).
 This service contains three handlers:
