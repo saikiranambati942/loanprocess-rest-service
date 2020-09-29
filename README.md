@@ -78,10 +78,10 @@ The `vendor` folder contains the application dependencies. All the packages need
 
 
 ## Execution
-After cloning the repository (https://github.com/saikiranambati942/loanprocess-rest-service.git),  run the below command
+After cloning the repository (https://github.com/saikiranambati942/loanprocess-rest-service.git),  run the below command from the root directory
 
 ```
-go run cmd/server/server.go
+go run cmd/loanapiserver/loanapiserver.go
 ```
 
 This will start the http server on localhost on port 8080.
@@ -137,10 +137,10 @@ For example
 ```
 
 ## Sample Execution Result
-#### Step1: Start server using the below command
+#### Step1: Start server using the below command from the root directory
 
 ```
-go run cmd/server/server.go
+go run cmd/loanapiserver/loanapiserver.go
 ```
 #### Step2: Initiate the loan with input data
 
