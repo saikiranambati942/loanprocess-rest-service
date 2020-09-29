@@ -16,6 +16,7 @@ type balanceDate struct {
 
 type dateSlice []time.Time
 
+// Implemented Interface methods to sort the dataSilce
 func (d dateSlice) Len() int {
 	return len(d)
 }
@@ -30,6 +31,7 @@ func (d dateSlice) Swap(i, j int) {
 // GetBalance function is a handler to handle the requests to know the amount of totalbalance remaining on a specific date
 func GetBalance(w http.ResponseWriter, r *http.Request) {
 	var bd balanceDate
+	// Unmarshalling the json request data
 	err := json.NewDecoder(r.Body).Decode(&bd)
 	if err != nil {
 		log.Println(err)
@@ -45,6 +47,7 @@ func GetBalance(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Please check the date format YYYY-MM-DD")
 		return
 	}
+	// condition to check if the balance date requested is before loan initiated date
 	if bldate.Before(lsd) {
 		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, "There is no loan record on this date")

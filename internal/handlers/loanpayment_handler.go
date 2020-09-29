@@ -15,6 +15,7 @@ type payment struct {
 // Payment function is a handler to handle the loan repayments
 func Payment(w http.ResponseWriter, r *http.Request) {
 	var p payment
+	// Unmarshalling the json request data
 	err := json.NewDecoder(r.Body).Decode(&p)
 	if err != nil {
 		log.Println(err)
