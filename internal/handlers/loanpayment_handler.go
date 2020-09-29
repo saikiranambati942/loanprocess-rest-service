@@ -37,8 +37,8 @@ func Payment(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Please check the date format YYYY-MM-DD")
 		return
 	}
-	// condition to check if the payment date requested to add is before loan initiated date
-	if pd.Before(lsd) {
+	// condition to check if the requested add payment date is only after loan start date
+	if pd.Before(lsd) || lsd.IsZero() {
 		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, "There is no loan record on this date")
 		return

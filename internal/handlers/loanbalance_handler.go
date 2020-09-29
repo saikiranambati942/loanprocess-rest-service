@@ -47,8 +47,8 @@ func GetBalance(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Please check the date format YYYY-MM-DD")
 		return
 	}
-	// condition to check if the balance date requested is before loan initiated date
-	if bldate.Before(lsd) {
+	// condition to check if the requested date to get balance is only after loan start date
+	if bldate.Before(lsd) || lsd.IsZero() {
 		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, "There is no loan record on this date")
 		return
