@@ -72,6 +72,7 @@ func GetBalance(w http.ResponseWriter, r *http.Request) {
 	}
 	// Assigning the initial balance to loan amount
 	b := l.Loanamount
+	interestaccrued := 0.0
 	// pd is the payment date. Ranging over the date slice
 	for i, pd := range ds {
 		var days float64
@@ -82,10 +83,11 @@ func GetBalance(w http.ResponseWriter, r *http.Request) {
 		}
 
 		interestPerday := (l.Interest * b) / (100 * 365)
-		interestaccrued := interestPerday * days
+		interestaccrued = interestaccrued + (interestPerday * days)
 		//new balance amount
-		b = b + interestaccrued - datamap[pd]
+		b = b - datamap[pd]
 	}
+	b = b + interestaccrued
 	//converting the balance of float64 format t string format
 	balanceString := strconv.FormatFloat(b, 'f', 6, 64)
 	w.WriteHeader(http.StatusOK)
