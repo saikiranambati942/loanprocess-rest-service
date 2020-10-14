@@ -73,9 +73,14 @@ func GetBalance(w http.ResponseWriter, r *http.Request) {
 	// Assigning the initial balance to loan amount
 	b := l.Loanamount
 	// pd is the payment date. Ranging over the date slice
-	for _, pd := range ds {
-		// number of days between loan start date and payment date
-		days := pd.Sub(lsd).Hours() / 24
+	for i, pd := range ds {
+		var days float64
+		if i == 0 {
+			days = pd.Sub(lsd).Hours() / 24
+		} else {
+			days = pd.Sub(ds[i-1]).Hours() / 24
+		}
+
 		interestPerday := (l.Interest * b) / (100 * 365)
 		interestaccrued := interestPerday * days
 		//new balance amount
