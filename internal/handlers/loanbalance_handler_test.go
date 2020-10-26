@@ -1,4 +1,4 @@
-package test
+package handlers
 
 import (
 	"net/http"
@@ -64,7 +64,7 @@ func TestLoanBalanceHandler(t *testing.T) {
 		r := httptest.NewRequest(http.MethodPost, "/getbalance", strings.NewReader(x))
 		w := httptest.NewRecorder()
 		http.DefaultServeMux.ServeHTTP(w, r)
-		expectedBalance := "Your Loan Balance as of 2020-02-22 is 4023.321449"
+		expectedBalance := "Your Loan Balance as of 2020-02-22 is 4013.424658"
 		assert.Equal(t, expectedBalance, w.Body.String())
 	})
 

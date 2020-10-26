@@ -1,7 +1,6 @@
-package test
+package handlers
 
 import (
-	"loanprocess-rest-service/internal/handlers"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -11,7 +10,7 @@ import (
 )
 
 func init() {
-	handlers.Routes()
+	Routes()
 }
 
 func TestLoanPaymentHandler(t *testing.T) {
@@ -72,14 +71,14 @@ func TestLoanPaymentHandler(t *testing.T) {
 func TestDate(t *testing.T) {
 
 	t.Run("validating positive testcase of Date utility function", func(t *testing.T) {
-		d, _ := handlers.Date("2020-02-02")
+		d, _ := Date("2020-02-02")
 		expected := "2020-02-02 00:00:00 +0000 UTC"
 		assert.Equal(t, expected, d.String())
 
 	})
 
 	t.Run("validating negative testcase of Date utility function", func(t *testing.T) {
-		_, err := handlers.Date("2020-0@-02")
+		_, err := Date("2020-0@-02")
 		assert.Error(t, err)
 	})
 
