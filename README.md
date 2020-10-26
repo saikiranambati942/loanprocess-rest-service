@@ -42,12 +42,11 @@ Service does not handle multiple loans, i.e. the state will be cleared when a ne
     |              └──loaninitiate_handler.go
     |              └──loanpayment_handler.go
     |              └──loanbalance_handler.go
-    |                
-    ├── test                                      # unit tests for handlers     
-    |      └──loaninitiate_handler_test.go                             
-    |      └──loanpayment_handler_test.go
-    |      └──loanbalance_handler_test.go
-    |
+    |              └──loaninitiate_handler_test.go              # unit tests for handlers    
+    |              └──loanpayment_handler_test.go                                 
+    |              └──loanbalance_handler_test.go                    
+    |      
+    |      
     |
     ├── docs                                     # contains screenshots of run results for user reference 
     |      └──images                        
@@ -72,11 +71,7 @@ Payment handler handles the loan repayment requests (`loanpayment_handler.go`)
 
 GetBalance handler handles the requests to retrieve the remaining balance  on a specified date (`loanbalance_handler.go`)
 
-
-[`test`](https://github.com/saikiranambati942/loanprocess-rest-service/tree/master/test "API documentation") package:
---------------------------------------------------------------------------------------------------------------------
-
-`test` package contains the unit test cases covered for all the application code functionalities
+This package also contains the unit test cases covered for all the handlers.
 
 
 [`vendor`](https://github.com/saikiranambati942/loanprocess-rest-service/tree/master/vendor "API documentation") package:
