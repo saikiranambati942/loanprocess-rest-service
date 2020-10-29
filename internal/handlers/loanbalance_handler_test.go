@@ -35,7 +35,7 @@ func TestLoanBalanceHandler(t *testing.T) {
 		if w.Code != 200 {
 			t.Fatalf("should receive a statuscode of %d but received %d", http.StatusOK, w.Code)
 		}
-		r2 := httptest.NewRequest("GET", "/getbalance/2020-02-20", nil)
+		r2 := httptest.NewRequest("GET", "/balance/2020-02-20", nil)
 		w2 := httptest.NewRecorder()
 		Router().ServeHTTP(w2, r2)
 		if w2.Code != 200 {
@@ -45,7 +45,7 @@ func TestLoanBalanceHandler(t *testing.T) {
 
 	t.Run("validating the balance on a payment date", func(t *testing.T) {
 
-		r := httptest.NewRequest("GET", "/getbalance/2020-02-20", nil)
+		r := httptest.NewRequest("GET", "/balance/2020-02-20", nil)
 		w := httptest.NewRecorder()
 		Router().ServeHTTP(w, r)
 		expectedBalance := "4012.328767"
@@ -56,7 +56,7 @@ func TestLoanBalanceHandler(t *testing.T) {
 	})
 	t.Run("validating the balance on a non payment date", func(t *testing.T) {
 
-		r := httptest.NewRequest("GET", "/getbalance/2020-02-22", nil)
+		r := httptest.NewRequest("GET", "/balance/2020-02-22", nil)
 		w := httptest.NewRecorder()
 		Router().ServeHTTP(w, r)
 		expectedBalance := "4013.424658"
@@ -67,7 +67,7 @@ func TestLoanBalanceHandler(t *testing.T) {
 
 	t.Run("validating the balance before loan start date", func(t *testing.T) {
 
-		r := httptest.NewRequest("GET", "/getbalance/2020-02-01", nil)
+		r := httptest.NewRequest("GET", "/balance/2020-02-01", nil)
 		w := httptest.NewRecorder()
 		Router().ServeHTTP(w, r)
 		expected := "There is no loan record on this date"

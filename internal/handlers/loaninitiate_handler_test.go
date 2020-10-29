@@ -6,8 +6,17 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/gorilla/mux"
 	"github.com/stretchr/testify/assert"
 )
+
+func Router() *mux.Router {
+	r := mux.NewRouter()
+	r.HandleFunc("/loaninitiate", LoanInitiate).Methods("POST")
+	r.HandleFunc("/payment", Payment).Methods("POST")
+	r.HandleFunc("/balance/{date}", GetBalance).Methods("GET")
+	return r
+}
 
 func TestLoanInitiateHandlerPositive(t *testing.T) {
 	x := `{
