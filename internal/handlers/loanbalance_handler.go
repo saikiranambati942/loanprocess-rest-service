@@ -12,10 +12,6 @@ import (
 	"github.com/gorilla/mux"
 )
 
-type balanceDate struct {
-	Date string `json:"date"`
-}
-
 type balance struct {
 	Balance string `json:"balance"`
 }
@@ -35,11 +31,10 @@ func (d dateSlice) Swap(i, j int) {
 
 // GetBalance function is a handler to handle the requests to know the amount of totalbalance remaining on a specific date
 func GetBalance(w http.ResponseWriter, r *http.Request) {
-	var bd balanceDate
 	params := mux.Vars(r)
-	bd.Date = params["date"]
+	bd := params["date"] // balanceDate
 	// Assuming date in the request is in the format of YYYY-MM-DD
-	bldate, err := Date(bd.Date)
+	bldate, err := Date(bd)
 	if err != nil {
 		log.Println(err)
 		w.WriteHeader(http.StatusBadRequest)
