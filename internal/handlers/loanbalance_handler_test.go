@@ -70,8 +70,6 @@ func TestLoanBalanceHandler(t *testing.T) {
 		r := httptest.NewRequest("GET", "/balance/2020-02-01", nil)
 		w := httptest.NewRecorder()
 		Router().ServeHTTP(w, r)
-		expected := "There is no loan record on this date"
-		assert.Equal(t, expected, w.Body.String())
 		assert.Equal(t, 400, http.StatusBadRequest)
 	})
 

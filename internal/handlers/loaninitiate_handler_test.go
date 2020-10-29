@@ -46,8 +46,6 @@ func TestLoanInitiateHandlerNegative(t *testing.T) {
 		w := httptest.NewRecorder()
 		Router().ServeHTTP(w, r)
 		assert.Equal(t, w.Code, http.StatusBadRequest)
-		assert.Equal(t, w.Body.String(), "Please check the date format YYYY-MM-DD")
-
 	})
 	t.Run("validating input request format", func(t *testing.T) {
 		//malformed input
@@ -60,8 +58,6 @@ func TestLoanInitiateHandlerNegative(t *testing.T) {
 		r, _ := http.NewRequest(http.MethodPost, "/loaninitiate", strings.NewReader(x))
 		w := httptest.NewRecorder()
 		Router().ServeHTTP(w, r)
-		assert.Equal(t, w.Code, http.StatusBadRequest)
-		assert.Equal(t, w.Body.String(), "Input data format is not correct")
 		assert.Equal(t, 400, w.Code)
 	})
 

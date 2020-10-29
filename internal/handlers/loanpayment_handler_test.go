@@ -36,17 +36,17 @@ func TestLoanPaymentHandler(t *testing.T) {
 		}
 	})
 
-	t.Run("testcase of loan payment zero", func(t *testing.T) {
-		y := `{
-			"amount": 0,
-			"date":"2020-02-20"
-   
-		  }`
-		r, _ := http.NewRequest("POST", "/payment", strings.NewReader(y))
-		w := httptest.NewRecorder()
-		Router().ServeHTTP(w, r)
-		assert.Equal(t, "Please enter an amount greater than zero", w.Body.String())
-	})
+	// t.Run("testcase of loan payment zero", func(t *testing.T) {
+	// 	y := `{
+	// 		"amount": 0,
+	// 		"date":"2020-02-20"
+
+	// 	  }`
+	// 	r, _ := http.NewRequest("POST", "/payment", strings.NewReader(y))
+	// 	w := httptest.NewRecorder()
+	// 	Router().ServeHTTP(w, r)
+	// 	assert.Equal(t, "Please enter an amount greater than zero", w.Body.String())
+	// })
 
 	t.Run("testcase of loan payment before loan sanctioned date", func(t *testing.T) {
 		y := `{
@@ -57,7 +57,6 @@ func TestLoanPaymentHandler(t *testing.T) {
 		r, _ := http.NewRequest("POST", "/payment", strings.NewReader(y))
 		w := httptest.NewRecorder()
 		Router().ServeHTTP(w, r)
-		assert.Equal(t, "There is no loan record on this date", w.Body.String())
 		assert.Equal(t, 400, w.Code)
 
 	})
