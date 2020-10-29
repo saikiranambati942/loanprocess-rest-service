@@ -6,11 +6,16 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/gorilla/mux"
 	"github.com/stretchr/testify/assert"
 )
 
-func init() {
-	Routes()
+func Router() *mux.Router {
+	r := mux.NewRouter()
+	r.HandleFunc("/loaninitiate", LoanInitiate).Methods("POST")
+	r.HandleFunc("/payment", Payment).Methods("POST")
+	r.HandleFunc("/getbalance/{date}", GetBalance).Methods("GET")
+	return r
 }
 
 func TestLoanPaymentHandler(t *testing.T) {
@@ -21,9 +26,9 @@ func TestLoanPaymentHandler(t *testing.T) {
 			"startdate":"2020-02-03"
 			
 		  }`
-		r1 := httptest.NewRequest(http.MethodPost, "/loaninitiate", strings.NewReader(x))
+		r1, _ := http.NewRequest("POST", "/loaninitiate", strings.NewReader(x))
 		w1 := httptest.NewRecorder()
-		http.DefaultServeMux.ServeHTTP(w1, r1)
+		Router().ServeHTTP(w1, r1)
 		if w1.Code != 200 {
 			t.Fatalf("should receive a statuscode of %d but received %d", http.StatusOK, w1.Code)
 		}
@@ -32,9 +37,9 @@ func TestLoanPaymentHandler(t *testing.T) {
 					 "date":"2020-02-20"
 			
 				   }`
-		r := httptest.NewRequest(http.MethodPost, "/payment", strings.NewReader(y))
+		r, _ := http.NewRequest("POST", "/payment", strings.NewReader(y))
 		w := httptest.NewRecorder()
-		http.DefaultServeMux.ServeHTTP(w, r)
+		Router().ServeHTTP(w, r)
 		if w.Code != 200 {
 			t.Fatalf("should receive a statuscode of %d but received %d", http.StatusOK, w.Code)
 		}
@@ -46,9 +51,9 @@ func TestLoanPaymentHandler(t *testing.T) {
 			"date":"2020-02-20"
    
 		  }`
-		r := httptest.NewRequest(http.MethodPost, "/payment", strings.NewReader(y))
+		r, _ := http.NewRequest("POST", "/payment", strings.NewReader(y))
 		w := httptest.NewRecorder()
-		http.DefaultServeMux.ServeHTTP(w, r)
+		Router().ServeHTTP(w, r)
 		assert.Equal(t, "Please enter an amount greater than zero", w.Body.String())
 	})
 
@@ -58,28 +63,12 @@ func TestLoanPaymentHandler(t *testing.T) {
 			"date":"2020-02-02"
    
 		  }`
-		r := httptest.NewRequest(http.MethodPost, "/payment", strings.NewReader(y))
+		r, _ := http.NewRequest("POST", "/payment", strings.NewReader(y))
 		w := httptest.NewRecorder()
-		http.DefaultServeMux.ServeHTTP(w, r)
+		Router().ServeHTTP(w, r)
 		assert.Equal(t, "There is no loan record on this date", w.Body.String())
 		assert.Equal(t, 400, w.Code)
 
-	})
-
-}
-
-func TestDate(t *testing.T) {
-
-	t.Run("validating positive testcase of Date utility function", func(t *testing.T) {
-		d, _ := Date("2020-02-02")
-		expected := "2020-02-02 00:00:00 +0000 UTC"
-		assert.Equal(t, expected, d.String())
-
-	})
-
-	t.Run("validating negative testcase of Date utility function", func(t *testing.T) {
-		_, err := Date("2020-0@-02")
-		assert.Error(t, err)
 	})
 
 }

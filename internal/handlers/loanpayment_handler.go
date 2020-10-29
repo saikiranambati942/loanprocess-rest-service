@@ -54,5 +54,4 @@ func Payment(w http.ResponseWriter, r *http.Request) {
 	// adding the payment date and amount to the map
 	datamap[pd] = p.Repayment
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "Payment of %f added successfully on %s", p.Repayment, p.PaidDate)
 }

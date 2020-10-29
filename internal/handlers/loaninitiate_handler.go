@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"strconv"
-	"strings"
 	"time"
 )
 
@@ -55,24 +53,13 @@ func LoanInitiate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "Loan amount of %f is initiated successfully on %s with interest rate of %f%% per annum", l.Loanamount, l.Startdate, l.Interest)
 }
 
 // Date is a utility function that takes a date in string format(YYYY-MM-DD) and converts it into time.Time format
 func Date(date string) (time.Time, error) {
-	d := strings.Split(date, "-")
-	t := time.Time{} // zeroth value of time is nil struct
-	year, err := strconv.Atoi(d[0])
+	t, err := time.Parse("2006-01-02", date)
 	if err != nil {
 		return t, err
 	}
-	month, err := strconv.Atoi(d[1])
-	if err != nil {
-		return t, err
-	}
-	day, err := strconv.Atoi(d[2])
-	if err != nil {
-		return t, err
-	}
-	return time.Date(year, time.Month(month), day, 0, 0, 0, 0, time.UTC), nil
+	return t, nil
 }
