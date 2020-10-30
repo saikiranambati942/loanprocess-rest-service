@@ -88,7 +88,7 @@ go run cmd/loanapiserver/loanapiserver.go
 ```
 
 
-To initiate the loan, trigger the "/loaninitiate" endpoint with the below request format:
+To initiate the loan, trigger the POST "/loaninitiate" endpoint with the below request format:
 ```
 {
   "loanamount": float64,
@@ -106,7 +106,7 @@ For example:
   
 }
 ```
-Now to add a payment on a particular date, trigger the "/payment" endpoint with the below request format:
+Now to add a payment on a particular date, trigger the POST "/payment" endpoint with the below request format:
 
 ```
 {
@@ -122,20 +122,20 @@ For example
  "date": "2020-02-20"
 }
 ```
-To fetch remaining balance on a particular date, trigger the "/getbalance"  endpoint with the below request format:
+To fetch remaining balance on a particular date, trigger the GET "/balance/{date}"  endpoint with the below request format:
 
 ```
-{
-     "date": string (YYYY-MM-DD format)
-}
+
+    /balance/{date}
+
    ```
 
 For example   
 
 ```
-{ 
- "date": "2020-02-27"
-}
+
+ /balance/{2020-02-27}
+
 ```
 
 #### Please note:
@@ -181,7 +181,7 @@ go run cmd/loanapiserver/loanapiserver.go
 1) Welcome page.
 2) Adding authorization and authentication functionality for a user.
 3) To handle multiple loan requests by integrating with a database. 
-4) Dockerize the application.
+
 
 
 
