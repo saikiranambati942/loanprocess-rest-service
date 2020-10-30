@@ -73,6 +73,7 @@ func LoanInitiate(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(m)
+
 }
 
 // Date is a utility function that takes a date in string format(YYYY-MM-DD) and converts it into time.Time format
