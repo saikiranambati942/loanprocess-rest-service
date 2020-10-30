@@ -2,18 +2,18 @@ package handlers
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 	"sort"
 	"strconv"
 	"time"
+
+	"github.com/gorilla/mux"
 )
 
-type balanceDate struct {
-	Date string `json:"date"`
+type balance struct {
+	Balance string `json:"balance"`
 }
-
 type dateSlice []time.Time
 
 // Implemented Interface methods to sort the dataSilce
@@ -30,27 +30,26 @@ func (d dateSlice) Swap(i, j int) {
 
 // GetBalance function is a handler to handle the requests to know the amount of totalbalance remaining on a specific date
 func GetBalance(w http.ResponseWriter, r *http.Request) {
-	var bd balanceDate
-	// Unmarshalling the json request data
-	err := json.NewDecoder(r.Body).Decode(&bd)
-	if err != nil {
-		log.Println(err)
-		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintf(w, "Input data format is not correct")
-		return
-	}
+	params := mux.Vars(r)
+	bd := params["date"] // bd means balanceDate
 	// Assuming date in the request is in the format of YYYY-MM-DD
-	bldate, err := Date(bd.Date)
+	bldate, err := Date(bd)
 	if err != nil {
 		log.Println(err)
+		w.Header().Set("Content-type", "application/json")
 		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintf(w, "Please check the date format YYYY-MM-DD")
+		er := errorResponse{
+			Error: "date format should be YYYY-MM-DD"}
+		json.NewEncoder(w).Encode(er)
 		return
 	}
 	// condition to check if the requested date to get balance is only after loan start date
 	if bldate.Before(lsd) || lsd.IsZero() {
+		w.Header().Set("Content-type", "application/json")
 		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintf(w, "There is no loan record on this date")
+		er := errorResponse{
+			Error: "no loan record on this date"}
+		json.NewEncoder(w).Encode(er)
 		return
 	}
 	// checking whether the requested balance date is in the map of paid dates list.
@@ -90,6 +89,10 @@ func GetBalance(w http.ResponseWriter, r *http.Request) {
 	b = b + interestaccrued
 	//converting the balance of float64 format t string format
 	balanceString := strconv.FormatFloat(b, 'f', 6, 64)
+	w.Header().Set("Content-type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "Your Loan Balance as of %s is %s", bd.Date, balanceString)
+	bal := balance{
+		Balance: balanceString}
+	json.NewEncoder(w).Encode(bal)
+
 }

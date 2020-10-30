@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"encoding/json"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -9,11 +10,9 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func init() {
-	Routes()
-}
-
 func TestLoanPaymentHandler(t *testing.T) {
+	var m message
+	var e errorResponse
 	t.Run("positive testcase of statuscode check", func(t *testing.T) {
 		x := `{
 			"loanamount": 5000,
@@ -21,9 +20,9 @@ func TestLoanPaymentHandler(t *testing.T) {
 			"startdate":"2020-02-03"
 			
 		  }`
-		r1 := httptest.NewRequest(http.MethodPost, "/loaninitiate", strings.NewReader(x))
+		r1, _ := http.NewRequest("POST", "/loaninitiate", strings.NewReader(x))
 		w1 := httptest.NewRecorder()
-		http.DefaultServeMux.ServeHTTP(w1, r1)
+		Router().ServeHTTP(w1, r1)
 		if w1.Code != 200 {
 			t.Fatalf("should receive a statuscode of %d but received %d", http.StatusOK, w1.Code)
 		}
@@ -32,24 +31,28 @@ func TestLoanPaymentHandler(t *testing.T) {
 					 "date":"2020-02-20"
 			
 				   }`
-		r := httptest.NewRequest(http.MethodPost, "/payment", strings.NewReader(y))
+		r, _ := http.NewRequest("POST", "/payment", strings.NewReader(y))
 		w := httptest.NewRecorder()
-		http.DefaultServeMux.ServeHTTP(w, r)
+		Router().ServeHTTP(w, r)
 		if w.Code != 200 {
 			t.Fatalf("should receive a statuscode of %d but received %d", http.StatusOK, w.Code)
 		}
+		json.Unmarshal(w.Body.Bytes(), &m)
+		assert.Equal(t, "payment successful", m.Message)
 	})
 
 	t.Run("testcase of loan payment zero", func(t *testing.T) {
 		y := `{
 			"amount": 0,
 			"date":"2020-02-20"
-   
+
 		  }`
-		r := httptest.NewRequest(http.MethodPost, "/payment", strings.NewReader(y))
+		r, _ := http.NewRequest("POST", "/payment", strings.NewReader(y))
 		w := httptest.NewRecorder()
-		http.DefaultServeMux.ServeHTTP(w, r)
-		assert.Equal(t, "Please enter an amount greater than zero", w.Body.String())
+		Router().ServeHTTP(w, r)
+		json.Unmarshal(w.Body.Bytes(), &e)
+		assert.Equal(t, http.StatusBadRequest, w.Code)
+		assert.Equal(t, "amount should be greater than zero", e.Error)
 	})
 
 	t.Run("testcase of loan payment before loan sanctioned date", func(t *testing.T) {
@@ -58,28 +61,26 @@ func TestLoanPaymentHandler(t *testing.T) {
 			"date":"2020-02-02"
    
 		  }`
-		r := httptest.NewRequest(http.MethodPost, "/payment", strings.NewReader(y))
+		r, _ := http.NewRequest("POST", "/payment", strings.NewReader(y))
 		w := httptest.NewRecorder()
-		http.DefaultServeMux.ServeHTTP(w, r)
-		assert.Equal(t, "There is no loan record on this date", w.Body.String())
-		assert.Equal(t, 400, w.Code)
+		Router().ServeHTTP(w, r)
+		json.Unmarshal(w.Body.Bytes(), &e)
+		assert.Equal(t, http.StatusBadRequest, w.Code)
+		assert.Equal(t, "no loan record on this date", e.Error)
 
 	})
-
-}
-
-func TestDate(t *testing.T) {
-
-	t.Run("validating positive testcase of Date utility function", func(t *testing.T) {
-		d, _ := Date("2020-02-02")
-		expected := "2020-02-02 00:00:00 +0000 UTC"
-		assert.Equal(t, expected, d.String())
-
-	})
-
-	t.Run("validating negative testcase of Date utility function", func(t *testing.T) {
-		_, err := Date("2020-0@-02")
-		assert.Error(t, err)
+	t.Run("validating date format", func(t *testing.T) {
+		x := `{
+			"amount": 1000,
+			"date":"2020/02/02"
+			
+		  }`
+		r, _ := http.NewRequest(http.MethodPost, "/payment", strings.NewReader(x))
+		w := httptest.NewRecorder()
+		Router().ServeHTTP(w, r)
+		json.Unmarshal(w.Body.Bytes(), &e)
+		assert.Equal(t, http.StatusBadRequest, w.Code)
+		assert.Equal(t, "date format should be YYYY-MM-DD", e.Error)
 	})
 
 }

@@ -1,10 +1,12 @@
 package handlers
 
-import "net/http"
+import (
+	"github.com/gorilla/mux"
+)
 
 // Routes function routes requests to a specific handler based the requestendpoint
-func Routes() {
-	http.HandleFunc("/getbalance", GetBalance)
-	http.HandleFunc("/payment", Payment)
-	http.HandleFunc("/loaninitiate", LoanInitiate)
+func Routes(r *mux.Router) {
+	r.HandleFunc("/loaninitiate", LoanInitiate).Methods("POST")
+	r.HandleFunc("/payment", Payment).Methods("POST")
+	r.HandleFunc("/balance/{date}", GetBalance).Methods("GET")
 }
