@@ -11,6 +11,8 @@ import (
 )
 
 func TestLoanBalanceHandler(t *testing.T) {
+	var e errorResponse
+	var b balance
 	t.Run("positive testcase of statuscode", func(t *testing.T) {
 		x := `{
 			"loanamount": 5000,
@@ -49,7 +51,6 @@ func TestLoanBalanceHandler(t *testing.T) {
 		w := httptest.NewRecorder()
 		Router().ServeHTTP(w, r)
 		expectedBalance := "4012.328767"
-		var b balance
 		json.Unmarshal(w.Body.Bytes(), &b)
 		assert.Equal(t, expectedBalance, b.Balance)
 
@@ -60,7 +61,6 @@ func TestLoanBalanceHandler(t *testing.T) {
 		w := httptest.NewRecorder()
 		Router().ServeHTTP(w, r)
 		expectedBalance := "4013.424658"
-		var b balance
 		json.Unmarshal(w.Body.Bytes(), &b)
 		assert.Equal(t, expectedBalance, b.Balance)
 	})
@@ -70,7 +70,9 @@ func TestLoanBalanceHandler(t *testing.T) {
 		r := httptest.NewRequest("GET", "/balance/2020-02-01", nil)
 		w := httptest.NewRecorder()
 		Router().ServeHTTP(w, r)
-		assert.Equal(t, 400, http.StatusBadRequest)
+		assert.Equal(t, http.StatusBadRequest, w.Code)
+		json.Unmarshal(w.Body.Bytes(), &e)
+		assert.Equal(t, "no loan record on this date", e.Error)
 	})
 
 }
