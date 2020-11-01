@@ -12,11 +12,11 @@ WORKDIR /usr/local/go/src/loanprocess-rest-service
 ADD . /usr/local/go/src/loanprocess-rest-service
 
 #Build app
-RUN go build cmd/loanapiserver/loanapiserver.go
+RUN go build -o loanprocessor cmd/loanprocessor/main.go
 
 #Ports
 EXPOSE 8080
 
 # run the binary
-CMD ["./loanapiserver"]
+CMD ["./loanprocessor"]
 
