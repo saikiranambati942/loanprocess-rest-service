@@ -33,8 +33,8 @@ Service does not handle multiple loans, i.e. the state will be cleared when a ne
 ### Directory tree
     . 
     ├── cmd
-    |      └──loanapiserver
-    |             └──loanapiserver.go             # main function of application i.e; loanprocess-rest-service starts here
+    |      └──loanprocessor
+    |             └──main.go             # main function of application i.e; loanprocess-rest-service starts here
     |                         
     ├── internal                                  # handlers for loan initiation, add payment and get balance information 
     |      └──handlers
@@ -57,7 +57,7 @@ Service does not handle multiple loans, i.e. the state will be cleared when a ne
 [`cmd`](https://github.com/saikiranambati942/loanprocess-rest-service/tree/master/cmd "API documentation") package:
 ------------------------------------------------------------------------------------------------------------------
 
- `cmd` package is the initial point of the application where `loanapiserver` is the placeholder for loanapiserver.go(starting point of application)
+ `cmd` package is the initial point of the application where `loanprocessor` is the placeholder for main.go(starting point of application)
 
 
 [`internal`](https://github.com/saikiranambati942/loanprocess-rest-service/tree/master/internal "API documentation") package:
@@ -84,7 +84,7 @@ This package also contains the unit test cases covered for all the handlers.
 After cloning the repository (https://github.com/saikiranambati942/loanprocess-rest-service.git), run the below command from the root directory to start the http server on localhost:8080
 
 ```
-go run cmd/loanapiserver/loanapiserver.go
+go run cmd/loanprocessor/main.go
 ```
 
 
@@ -149,7 +149,7 @@ For example
 #### Step1: Start server using the below command from the root directory
 
 ```
-go run cmd/loanapiserver/loanapiserver.go
+go run cmd/loanprocessor/main.go
 ```
 #### Step2: Initiate the loan with input data
 
