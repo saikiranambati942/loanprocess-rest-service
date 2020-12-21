@@ -1,4 +1,4 @@
-# Loan-Process Rest Service ![Run tests](https://github.com/saikiranambati942/loanprocess-rest-service/workflows/Run%20tests/badge.svg)
+# Loan-Process Rest Service [![Run tests](https://github.com/saikiranambati942/loanprocess-rest-service/workflows/Run%20tests/badge.svg)](https://github.com/saikiranambati942/loanprocess-rest-service/actions?query=workflow%3A%22Run+tests%22)
 
 ## 🚩 Table of Contents
 
